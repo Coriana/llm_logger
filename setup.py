@@ -1,7 +1,7 @@
 from setuptools import setup
 setup(
     name='llm_logger',
-    version='0.1.0',
+    version='0.1.1',
     py_modules=['llm_logger'],
     description='A simple logger for Requests/Responses from LLMs',
     author='Corianas',

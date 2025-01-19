@@ -80,9 +80,8 @@ class LLMLogger:
             timestamp,
             model,
             request_data,
-            response_data,
-            prompt_tokens)
-            VALUES (?, ?, ?, ?, ?, ?);
+            response_data)
+            VALUES (?, ?, ?, ?, ?);
             """
 
             try:

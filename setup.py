@@ -1,9 +1,8 @@
-from setuptools import setup, find_packages
-
+from setuptools import setup
 setup(
     name='llm_logger',
     version='0.1.0',
-    packages=find_packages(),
+    py_modules=['llm_logger'],
     description='A simple logger for Requests/Responses from LLMs',
     author='Corianas',
     author_email='corana@gmail.com',

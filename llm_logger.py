@@ -41,16 +41,7 @@ class LLMLogger:
             timestamp TEXT NOT NULL,
             model TEXT NOT NULL,
             request_data TEXT NOT NULL,
-            response_data TEXT NOT NULL,
-            prompt_tokens INTEGER,
-            completion_tokens INTEGER,
-            total_tokens INTEGER,
-            cached_tokens INTEGER,
-            audio_tokens INTEGER,
-            reasoning_tokens INTEGER,
-            accepted_prediction_tokens INTEGER,
-            rejected_prediction_tokens INTEGER,
-            FOREIGN KEY (interaction_id) REFERENCES interactions(interaction_id)
+            response_data TEXT NOT NULL
         );
         """
 
@@ -90,36 +81,20 @@ class LLMLogger:
             model,
             request_data,
             response_data,
-            prompt_tokens,
-            completion_tokens,
-            total_tokens,
-            cached_tokens,
-            audio_tokens,
-            reasoning_tokens,
-            accepted_prediction_tokens,
-            rejected_prediction_tokens)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+            prompt_tokens)
+            VALUES (?, ?, ?, ?, ?, ?);
             """
 
             try:
                 cursor = conn.cursor()
                 
-                usage = log_entry.get('token_usage', {})
                 # Insert into interactions table
                 cursor.execute(insert_interaction_query, (
                     log_entry['interaction_id'],
                     log_entry['timestamp'],
                     log_entry['model'],
                     log_entry['request_data'],
-                    log_entry['response_data'],
-                    usage.get('prompt_tokens'),
-                    usage.get('completion_tokens'),
-                    usage.get('total_tokens'),
-                    usage.get('prompt_tokens_details', {}).get('cached_tokens'),
-                    usage.get('prompt_tokens_details', {}).get('audio_tokens'),
-                    usage.get('completion_tokens_details', {}).get('reasoning_tokens'),
-                    usage.get('completion_tokens_details', {}).get('accepted_prediction_tokens'),
-                    usage.get('completion_tokens_details', {}).get('rejected_prediction_tokens')
+                    log_entry['response_data']
                 ))
 
                 conn.commit()
